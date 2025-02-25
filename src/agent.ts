@@ -25,6 +25,10 @@ export const runAgent = async ({
     tools,
   })
 
+  if (response.tool_calls) {
+    console.log(response.tool_calls)
+  }
+
   await addMessages([response])
 
   logMessage(response)
