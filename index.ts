@@ -1,7 +1,6 @@
 import 'dotenv/config'
-import { addMessages, getMessages } from './src/memory'
 import { runAgent } from './src/agent'
-import { z } from 'zod'
+import { tools } from './src/tools'
 
 const userMessage = process.argv[2]
 
@@ -10,18 +9,7 @@ if (!userMessage) {
   process.exit(1)
 }
 
-await addMessages([{ role: 'user', content: userMessage }])
-
-
-const weatherTool = {
-  name: 'getWeather',
-  description: 'Get the weather for a given city',
-  parameters: z.object({ city: z.string() }),
-}
-
-const response = await runAgent({
+const messages = await runAgent({
   userMessage,
-  tools: [weatherTool],
+  tools,
 })
-
-console.log(response)
